@@ -1,0 +1,72 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title> {{ data.isEdit? 'Guardar ' : 'Ver '}} Usuario </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form novalidate
+            class="formulario"
+            [formGroup]="personaForm">
+    <div class="formulario-item">
+        <mat-form-field class="me-2" >
+          <input matInput placeholder="nombres"  class="form-control"  name="nombres" formControlName="nombre">         
+        </mat-form-field >
+        <span *ngIf=" personaForm.get('nombre')?.touched && personaForm.get('nombre')?.errors?.required">
+          (Debe ingresar el nombre )
+      </span>
+    </div>
+       
+    <div class="formulario-item">
+        <mat-form-field class="me-2">
+          <input matInput placeholder="apellidos" class="form-control"  name="apellidos" formControlName="apellido">
+        </mat-form-field>
+        <span *ngIf=" personaForm.get('apellido')?.touched && personaForm.get('apellido')?.errors?.required">
+            (Debe ingresar el apellido )
+        </span>
+    </div>
+       
+    <div class="formulario-item">
+        <mat-form-field class="me-2">
+          <input matInput placeholder="email" class="form-control"  name="email" formControlName="email">
+        </mat-form-field>
+        <span *ngIf=" personaForm.get('email')?.touched && personaForm.get('email')?.errors?.required">
+            (Debe ingresar un e-mail válido )
+        </span>
+    </div>
+
+    <div class="formulario-item">
+        <mat-form-field class="me-2">
+          <input matInput placeholder="usuario" class="form-control"  name="usuario" formControlName="usuario">
+        </mat-form-field>
+        <span *ngIf=" personaForm.get('usuario')?.touched && personaForm.get('usuario')?.errors?.required">
+            (Debe ingresar un usuario )
+        </span>
+    </div>
+       
+
+      
+        <mat-form-field *ngIf="data.isEdit"
+                        appearance="fill"
+                        class="me-2">
+            <mat-label>Escoge una opcion</mat-label>
+            <mat-select formControlName="estado">
+              <mat-option *ngFor="let estado of estados" [value]="estado"> {{ estado }} </mat-option>
+            </mat-select>
+            <mat-error >
+              Your selection is invalid
+            </mat-error>
+          </mat-form-field>
+
+          
+        </form>
+        <div *ngIf="!data.isEdit"
+                      class="me-2">
+              <mat-slide-toggle [checked]="isChecked " disabled="true">Estado</mat-slide-toggle>            
+        </div>
+
+      <div class="button-modal" >
+        <button id="agregar" class="me-2" mat-raised-button color="primary"
+                (click)="agregarPersona()" *ngIf="data.isEdit" [disabled]="personaForm?.invalid">Guardar</button>
+        <button id="cerrar" mat-raised-button (click)="close()" color="primary">Cerrar</button>
+    </div>
+    </mat-card-content>
+  </mat-card>
